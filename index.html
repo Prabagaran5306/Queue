@@ -1,224 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Queue Implementations</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.5;
-            background-color: #f7f7f7;
-        }
-
-        h2 {
-            color: #333;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        pre {
-            background-color: #f8f8f8;
-            padding: 10px;
-            overflow-x: auto;
-            font-size: 16px;
-            line-height: 1.4;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-
-        code {
-            font-family: Consolas, monospace;
-        }
-
-        .output {
-            background-color: #f0f0f0;
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-
-        .error {
-            color: red;
-        }
-
-        .section {
-            background-color: #ffffff;
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 800px;
-            border-radius: 4px;
-        }
-    </style>
-</head>
-<body>
-    <div class="section">
-        <h2>Queue implementation with front and rear</h2>
-        <pre><code>#include &lt;stdio.h&gt;
-#define size 10
-int rear = -1;
-int arr[size];
-
-void enqueue(int val) {  // Enqueue only check based on rear
-    if (rear == size - 1) {
-        printf("\nQuery is full");
-    }
-    arr[++rear] = val;
-}
-
-int dequeue() {  // Dequeue only check based on front
-    if (rear == -1) {
-        return -1;
-    }
-    int temp = arr[0];
-    for (int i = 1; i &lt; size; i++) {
-        arr[i - 1] = arr[i];
-    }
-    rear--;
-    return temp;
-}
-
-void main() {
-    for (int i = 1; i &lt;= size; i++) {
-        printf("Enqueued: %d\n", i);
-        enqueue(i);
-    }
-    printf("/**************/\n");
-    for (int i = 0; i &lt; 12; i++) {
-        int temp = dequeue();
-        if (temp == -1) {
-            printf("Queue is empty\n");
-        } else {
-            printf("Dequeued: %d\n", temp);
-        }
-    }
-}
-</code></pre>
-    </div>
-
-    <div class="section">
-        <h2>Normal Queue only using rear</h2>
-        <pre><code>#include &lt;stdio.h&gt;
-#define size 10
-
-int front = -1;
-int rear;
-int arr[size];
-
-void enqueue(int val) {  // Enqueue only check based on rear
-    if (front == -1) {
-        arr[0] = val;
-        front++;
-        return;
-    }
-    if (rear == size - 1) {
-        printf("\nQuery is full");
-    }
-    arr[++rear] = val;
-}
-
-int dequeue() {  // Dequeue only check based on front
-    if (front == rear) {
-        printf("\nQueue is empty");
-    } else {
-        int temp = arr[front];
-        front++;
-        return temp;
-    }
-    return -1;
-}
-
-void main() {
-    for (int i = 1; i &lt;= size; i++) {
-        printf("\nEnqueued: %d", i);
-        enqueue(i);
-    }
-    for (int i = 0; i &lt; size; i++) {
-        int temp = dequeue();
-        printf("\nDequeued: %d", temp);
-    }
-}
-</code></pre>
-    </div>
-
-    <div class="section">
-        <h2>Circular Queue</h2>
-        <h3>Normal circular Queue:</h3>
-        <pre><code>#include &lt;stdio.h&gt;
-#define SIZE 5
-int front = -1;
-int rear = -1;
-int items[SIZE];
-
-int isFull() {
-    if (front == 0 &amp;&amp; rear == SIZE - 1) {
-        return 1;
-    }
-    if (front == rear + 1) {
-        return 1;
-    }
-    return 0;
-}
-
-int isEmpty() {
-    if (front == -1)
-        return 1;
-    else
-        return 0;
-}
-
-void enQueue(int element) {
-    if (isFull()) {
-        printf("Queue is full");
-    } else {
-        if (front == -1) {
-            front = 0;
-        }
-        rear = (rear + 1) % SIZE;
-        items[rear] = element;
-        printf("Enqueued: %d\n", element);
-    }
-}
-
-void deQueue() {
-    int element;
-    if (isEmpty()) {
-        printf("Queue is empty");
-    } else {
-        element = items[front];
-        if (front == rear) {
-            front = -1;
-            rear = -1;
-        } else {
-            front = (front + 1) % SIZE;
-        }
-        printf("Dequeued: %d\n", element);
-    }
-}
-
-void main() {
-    for (int i = 0; i &lt; SIZE; i++) {
-        enQueue(i);
-    }
-    for (int i = 0; i &lt; SIZE; i++) {
-        deQueue();
-    }
-    deQueue();
-}
-</code></pre>
-    </div>
-
-    <div class="section">
-        <h3>Circular Queue using Struct</h3>
-        <pre><code>#include &lt;stdio.h&gt;
+#include <stdio.h>
 #define SIZE 5
 
 struct Cir_Queue {
+    unsigned long int canId;
     int front;
     int rear;
     int can[SIZE];
 };
 
 int isFull(struct Cir_Queue* queue) {
-    if (queue->front == 0 &amp;&amp; queue->rear == SIZE - 1) {
+    if (queue->front == 0 && queue->rear == SIZE - 1) {
         return 1;
     }
     if (queue->front == queue->rear + 1) {
@@ -236,7 +27,7 @@ int isEmpty(struct Cir_Queue* queue) {
 
 void enQueue(struct Cir_Queue* queue, int element) {
     if (isFull(queue)) {
-        printf("Queue is full");
+        printf("Queue is full\n");
     } else {
         if (queue->front == -1) {
             queue->front = 0;
@@ -250,7 +41,7 @@ void enQueue(struct Cir_Queue* queue, int element) {
 void deQueue(struct Cir_Queue* queue) {
     int element;
     if (isEmpty(queue)) {
-        printf("Queue is empty");
+        printf("Queue is empty\n");
     } else {
         element = queue->can[queue->front];
         if (queue->front == queue->rear) {
@@ -264,21 +55,25 @@ void deQueue(struct Cir_Queue* queue) {
 }
 
 int main() {
+    unsigned long int id[100] = {201,1890400,14520902};
     struct Cir_Queue c1;
-    c1.front = -1;
-    c1.rear = -1;
 
-    for (int i = 0; i &lt; SIZE; i++) {
-        enQueue(&c1, i);
-    }
-    for (int i = 0; i &lt; SIZE; i++) {
+    for(int i=0;i<3;i++){
+        c1.canId = id[i];
+        c1.front = -1;
+        c1.rear = -1;
+        
+        printf("Can ID : %ld\n",c1.canId);
+        for (int i = 0; i < SIZE; i++) {
+            enQueue(&c1, i);
+        }
+        for (int i = 0; i < SIZE; i++) {
+            deQueue(&c1);
+        }
         deQueue(&c1);
+        printf("\n/***********/\n canID is finished\n/*****************/\n\n");
+        
     }
-    deQueue(&c1);
 
     return 0;
 }
-</code></pre>
-    </div>
-</body>
-</html>
