@@ -6,19 +6,21 @@
         body {
             font-family: Arial, sans-serif;
             line-height: 1.5;
+            background-color: #f7f7f7;
         }
 
         h2 {
             color: #333;
             margin-bottom: 10px;
+            text-align: center;
         }
 
         pre {
             background-color: #f8f8f8;
             padding: 10px;
             overflow-x: auto;
-            font-size: 14px;
-            line-height: 1.2;
+            font-size: 16px;
+            line-height: 1.4;
             border-radius: 4px;
             margin-bottom: 20px;
         }
@@ -37,11 +39,20 @@
         .error {
             color: red;
         }
+
+        .section {
+            background-color: #ffffff;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
-    <h2>Queue implementation with front and rear</h2>
-    <pre><code>#include &lt;stdio.h&gt;
+    <div class="section">
+        <h2>Queue implementation with front and rear</h2>
+        <pre><code>#include &lt;stdio.h&gt;
 #define size 10
 int rear = -1;
 int arr[size];
@@ -81,9 +92,11 @@ void main() {
     }
 }
 </code></pre>
+    </div>
 
-    <h2>Normal Queue only using rear</h2>
-    <pre><code>#include &lt;stdio.h&gt;
+    <div class="section">
+        <h2>Normal Queue only using rear</h2>
+        <pre><code>#include &lt;stdio.h&gt;
 #define size 10
 
 int front = -1;
@@ -124,10 +137,12 @@ void main() {
     }
 }
 </code></pre>
+    </div>
 
-    <h2>Circular Queue</h2>
-    <h3>Normal circular Queue:</h3>
-    <pre><code>#include &lt;stdio.h&gt;
+    <div class="section">
+        <h2>Circular Queue</h2>
+        <h3>Normal circular Queue:</h3>
+        <pre><code>#include &lt;stdio.h&gt;
 #define SIZE 5
 int front = -1;
 int rear = -1;
@@ -189,9 +204,11 @@ void main() {
     deQueue();
 }
 </code></pre>
+    </div>
 
-    <h3>Circular Queue using Struct</h3>
-    <pre><code>#include &lt;stdio.h&gt;
+    <div class="section">
+        <h3>Circular Queue using Struct</h3>
+        <pre><code>#include &lt;stdio.h&gt;
 #define SIZE 5
 
 struct Cir_Queue {
@@ -251,10 +268,10 @@ int main() {
     c1.front = -1;
     c1.rear = -1;
 
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i &lt; SIZE; i++) {
         enQueue(&c1, i);
     }
-    for (int i = 0; i < SIZE; i++) {
+    for (int i = 0; i &lt; SIZE; i++) {
         deQueue(&c1);
     }
     deQueue(&c1);
@@ -262,6 +279,6 @@ int main() {
     return 0;
 }
 </code></pre>
-
+    </div>
 </body>
 </html>
